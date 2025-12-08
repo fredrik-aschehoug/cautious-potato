@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CautiousPotato.Client/CautiousPotato.Client.csproj" />
+  <Project Path="CautiousPotato.Core/CautiousPotato.Core.csproj" />
+  <Project Path="CautiousPotato.Database/CautiousPotato.Database.csproj" />
+  <Project Path="CautiousPotato.Server/CautiousPotato.Server.csproj" />
+</Solution>

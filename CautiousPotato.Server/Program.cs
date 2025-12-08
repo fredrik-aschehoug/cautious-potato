@@ -1,5 +1,5 @@
-using cautious_potato.Client.Pages;
-using cautious_potato.Components;
+using CautiousPotato.Client.Pages;
+using CautiousPotato.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +28,6 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(cautious_potato.Client._Imports).Assembly);
+    .AddAdditionalAssemblies(typeof(CautiousPotato.Client._Imports).Assembly);
 
 app.Run();
