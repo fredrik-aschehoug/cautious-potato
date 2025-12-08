@@ -1,11 +1,14 @@
 using CautiousPotato.Client.Pages;
 using CautiousPotato.Components;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddFluentUIComponents();
 
 var app = builder.Build();
 
