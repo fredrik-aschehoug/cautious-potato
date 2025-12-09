@@ -4,6 +4,10 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
   <Project Path="CautiousPotato.Client/CautiousPotato.Client.csproj" />
   <Project Path="CautiousPotato.Core/CautiousPotato.Core.csproj" />
   <Project Path="CautiousPotato.Database/CautiousPotato.Database.csproj" />

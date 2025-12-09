@@ -1,5 +1,5 @@
-using CautiousPotato.Client.Pages;
 using CautiousPotato.Components;
+using CautiousPotato.Database;
 using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +9,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddFluentUIComponents();
+
+builder.Services.AddDatabase();
 
 var app = builder.Build();
 
