@@ -14,7 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CauriousPotato.Requests\CauriousPotato.Requests.csproj" />
     <ProjectReference Include="..\CautiousPotato.Client\CautiousPotato.Client.csproj" />
+    <ProjectReference Include="..\CautiousPotato.Core\CautiousPotato.Core.csproj" />
     <ProjectReference Include="..\CautiousPotato.Database\CautiousPotato.Database.csproj" />
   </ItemGroup>
 
