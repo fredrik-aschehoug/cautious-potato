@@ -7,11 +7,13 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path="Directory.Packages.props" />
+    <File Path="README.md" />
   </Folder>
   <Project Path="CauriousPotato.Clients/CauriousPotato.Clients.csproj" Id="88befd8c-2022-4320-87a2-84d66d86fec6" />
   <Project Path="CauriousPotato.Requests/CauriousPotato.Requests.csproj" Id="b9cd3a5c-2a7d-4f6a-98b1-b4e4f2639da1" />
   <Project Path="CautiousPotato.Client/CautiousPotato.Client.csproj" />
   <Project Path="CautiousPotato.Core/CautiousPotato.Core.csproj" />
   <Project Path="CautiousPotato.Database/CautiousPotato.Database.csproj" />
+  <Project Path="CautiousPotato.IntegrationTests/CautiousPotato.IntegrationTests.csproj" />
   <Project Path="CautiousPotato.Server/CautiousPotato.Server.csproj" />
 </Solution>

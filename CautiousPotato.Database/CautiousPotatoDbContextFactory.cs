@@ -8,7 +8,7 @@ public class CautiousPotatoDbContextFactory : IDesignTimeDbContextFactory<Cautio
     public CautiousPotatoDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<CautiousPotatoDbContext>();
-        optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Trusted_Connection=True;TrustServerCertificate=True;Integrated Security=True");
+        optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Initial Catalog=CautiousPotato;Trusted_Connection=True;TrustServerCertificate=True;Integrated Security=True");
 
         return new CautiousPotatoDbContext(optionsBuilder.Options);
     }
