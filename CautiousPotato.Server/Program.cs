@@ -1,7 +1,7 @@
 using CauriousPotato.Requests.Ingredients;
-using CautiousPotato.Components;
 using CautiousPotato.Core.Models;
 using CautiousPotato.Database;
+using CautiousPotato.Server.Components;
 using CautiousPotato.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FluentUI.AspNetCore.Components;

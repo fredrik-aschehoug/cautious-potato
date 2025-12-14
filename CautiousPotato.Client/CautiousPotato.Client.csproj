@@ -16,4 +16,8 @@
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CauriousPotato.Clients\CauriousPotato.Clients.csproj" />
+  </ItemGroup>
+
 </Project>
