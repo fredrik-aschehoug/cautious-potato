@@ -1,0 +1,47 @@
+﻿@page "/ingredients"
+@using CauriousPotato.Requests.Ingredients
+@using CautiousPotato.Client.Features.Ingredients
+@using CautiousPotato.Client.Services
+
+<PageTitle>Ingredients</PageTitle>
+
+<FluentGrid Spacing="2" Style="padding: 8px;">
+    <FluentGridItem xs="5">
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentLabel>Add Ingredient</FluentLabel>
+                <EditForm Model="@FormModel" OnValidSubmit="@HandleValidSubmitAsync" FormName="ingredient_entry">
+                    <FluentStack HorizontalAlignment="HorizontalAlignment.Center">
+                        <FluentTextField Name="name" @bind-Value="FormModel.Name" Label="Ingredient name" Required />
+                        <FluentButton Type="ButtonType.Submit" Appearance="Appearance.Accent">Submit</FluentButton>
+                    </FluentStack>
+                </EditForm>
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="5">
+        <IngredientsList />
+    </FluentGridItem>
+</FluentGrid>
+
+
+@code {
+    [Inject] public required IIngredientsService IngredientsService { get; set; }
+    private Ingredient[]? _ingredients;
+
+    [SupplyParameterFromForm]
+    private IngredientFormModel FormModel { get; set; } = new();
+
+    private async Task HandleValidSubmitAsync()
+    {
+        var request = new CreateIngredientRequest(FormModel.Name);
+        await IngredientsService.CreateIngredientAsync(request);
+
+        FormModel = new();
+    }
+
+    class IngredientFormModel
+    {
+        public string Name { get; set; } = "";
+    }
+}

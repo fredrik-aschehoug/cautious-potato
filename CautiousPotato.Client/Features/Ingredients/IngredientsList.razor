@@ -1,0 +1,18 @@
+@using CauriousPotato.Requests.Ingredients
+@using CautiousPotato.Client.Services
+
+<FluentCard>
+    @if (_ingredients == null)
+    {
+        <FluentProgressRing />
+    }
+    else
+    {
+        <ul>
+            @foreach (var ingredient in _ingredients)
+            {
+                <li>@ingredient.Name</li>
+            }
+        </ul>
+    }
+</FluentCard>

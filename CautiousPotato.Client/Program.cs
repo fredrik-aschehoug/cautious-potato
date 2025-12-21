@@ -1,4 +1,5 @@
 using CauriousPotato.Clients;
+using CautiousPotato.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.FluentUI.AspNetCore.Components;
 
@@ -12,5 +13,7 @@ builder.Services.AddHttpClient<IIngredientsClient, IngredientsClient>(client =>
 });
 
 builder.Services.AddFluentUIComponents();
+
+builder.Services.AddScoped<IIngredientsService, IngredientsService>();
 
 await builder.Build().RunAsync();
