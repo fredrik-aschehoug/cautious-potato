@@ -22,6 +22,11 @@ public sealed partial class IngredientsList : ComponentBase, IDisposable
         StateHasChanged();
     }
 
+    private Task HandleDeleteAsync(Ingredient ingredient)
+    {
+        return IngredientsService.DeleteIngredientAsync(new(ingredient.Id));
+    }
+
     public void Dispose()
     {
         IngredientsService.OnChangeAsync -= RefetchIngredientsAsync;

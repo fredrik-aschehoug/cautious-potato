@@ -10,6 +10,7 @@ public interface IIngredientsService
 
     Task CreateIngredientAsync(CreateIngredientRequest request);
     Task<Ingredient[]> GetAllIngredientsAsync();
+    Task DeleteIngredientAsync(DeleteIngredientRequest request);
 }
 
 public class IngredientsService(IIngredientsClient client) : IIngredientsService
@@ -29,5 +30,11 @@ public class IngredientsService(IIngredientsClient client) : IIngredientsService
         {
             await OnChangeAsync();
         }
+    }
+
+    public async Task DeleteIngredientAsync(DeleteIngredientRequest request)
+    {
+        await client.DeleteAsync(request);
+        await NotifyStateChangedAsync();
     }
 }

@@ -11,7 +11,12 @@
         <ul>
             @foreach (var ingredient in _ingredients)
             {
-                <li>@ingredient.Name</li>
+                <li>
+                    <FluentStack>
+                        <span>@ingredient.Name</span>
+                        <FluentButton Appearance="Appearance.Neutral" OnClick="@(async () => await HandleDeleteAsync(ingredient))">Delete</FluentButton>
+                    </FluentStack>
+                </li>
             }
         </ul>
     }

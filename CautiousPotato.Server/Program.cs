@@ -46,6 +46,7 @@ var apiGroup = app.MapGroup("/api");
 var ingredientsGroup = apiGroup .MapGroup("/ingredients");
 
 ingredientsGroup.MapGet("/", ([FromServices] IIngredientService service) => service.GetAllAsync());
+ingredientsGroup.MapDelete("/{id:guid}", ([FromServices] IIngredientService service, [FromRoute] Guid id) => service.DeleteAsync(new(id)));
 ingredientsGroup.MapGet("/{id:guid}", async ([FromServices] IIngredientService service, [FromRoute] Guid id) =>
     await service.GetAsync(new(id))
         is Ingredient ingredient

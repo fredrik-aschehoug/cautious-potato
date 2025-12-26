@@ -14,6 +14,10 @@ public class IngredientRepository(CautiousPotatoDbContext dbContext) : IIngredie
         await dbContext.SaveChangesAsync();
     }
 
+    public Task DeleteAsync(Guid id) => dbContext.Ingredients
+        .Where(ingredient => ingredient.ExternalId == id)
+        .ExecuteDeleteAsync();
+
     public async Task<Ingredient[]> GetAllAsync()
     {
         var entities = await dbContext.Ingredients.ToArrayAsync();

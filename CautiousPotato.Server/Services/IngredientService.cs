@@ -13,6 +13,7 @@ public class IngredientService(IIngredientRepository repository) : IIngredientSe
         return ingredient;
     }
 
+    public Task DeleteAsync(DeleteIngredientRequest request) => repository.DeleteAsync(request.Id);
     public Task<Ingredient[]> GetAllAsync() => repository.GetAllAsync();
 
     public Task<Ingredient?> GetAsync(GetIngredientRequest request) => repository.GetAsync(request.Id);

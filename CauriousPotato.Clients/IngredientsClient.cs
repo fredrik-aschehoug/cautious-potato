@@ -15,6 +15,11 @@ public class IngredientsClient(HttpClient client) : IIngredientsClient
         return await response.Content.ReadFromJsonAsync<Ingredient>() ?? throw new("No response");
     }
 
+    public async Task DeleteAsync(DeleteIngredientRequest request)
+    {
+        await client.DeleteAsync(Path.AppendPathSegment(request.Id));
+    }
+
     public async Task<Ingredient[]> GetAllAsync()
     {
         var response = await client.GetFromJsonAsync<Ingredient[]>(Path);
