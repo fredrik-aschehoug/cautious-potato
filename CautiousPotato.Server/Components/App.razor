@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using CautiousPotato.Server.Extensions
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,14 +10,25 @@
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["CautiousPotato.Server.styles.css"]" />
     <link rel="stylesheet" href="@Assets["_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css"]" />
-    <ImportMap />
+    <ImportMap nonce="@_nonce" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet @rendermode="@(new InteractiveWebAssemblyRenderMode(prerender: false))" />
 </head>
 
 <body>
     <Routes @rendermode="@(new InteractiveWebAssemblyRenderMode(prerender: false))" />
-    <script src="@Assets["_framework/blazor.web.js"]"></script>
+    <script src="@Assets["_framework/blazor.web.js"]" nonce="@_nonce"></script>
 </body>
 
 </html>
+
+@code
+{
+    [Inject] public required IHttpContextAccessor HttpContextAccessor { get; set; }
+    private string? _nonce;
+
+    protected override void OnInitialized()
+    {
+        _nonce = HttpContextAccessor.HttpContext?.GetNonce();
+    }
+}

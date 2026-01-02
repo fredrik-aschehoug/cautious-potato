@@ -2,6 +2,7 @@ using CauriousPotato.Requests.Ingredients;
 using CautiousPotato.Core.Models;
 using CautiousPotato.Database;
 using CautiousPotato.Server.Components;
+using CautiousPotato.Server.Middleware;
 using CautiousPotato.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FluentUI.AspNetCore.Components;
@@ -15,8 +16,9 @@ builder.Services.AddRazorComponents()
 builder.Services.AddFluentUIComponents();
 
 builder.Services.AddDatabase();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IIngredientService, IngredientService>();
+builder.Services.AddScoped<CspMiddleware>();
 
 var app = builder.Build();
 
@@ -35,6 +37,8 @@ app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages:
 app.UseHttpsRedirection();
 
 app.UseAntiforgery();
+
+app.UseMiddleware<CspMiddleware>();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
