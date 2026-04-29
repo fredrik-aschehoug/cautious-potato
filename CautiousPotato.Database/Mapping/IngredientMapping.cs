@@ -14,4 +14,9 @@ internal static class IngredientMapping
 
     public static Ingredient ToEntity(this Core.Models.Ingredient ingredient) =>
         new() { ExternalId = ingredient.Id, Name = ingredient.Name };
+
+    public static Ingredient[] ToEntity(this Core.Models.Ingredient[] ingredients) =>
+        ingredients
+            .Select(ingredient => ingredient.ToEntity())
+            .ToArray();
 }

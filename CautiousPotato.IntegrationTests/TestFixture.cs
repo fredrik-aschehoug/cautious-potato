@@ -12,6 +12,7 @@ namespace CautiousPotato.IntegrationTests;
 public class TestFixture : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public IIngredientsClient IngredientsClient => new IngredientsClient(CreateClient());
+    public IRecipesClient RecipesClient => new RecipesClient(CreateClient());
     public Fixture AutoFixture = new();
 
     public async ValueTask InitializeAsync()

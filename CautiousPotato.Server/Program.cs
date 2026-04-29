@@ -1,8 +1,10 @@
 using CauriousPotato.Requests.Ingredients;
+using CauriousPotato.Requests.Recipies;
 using CautiousPotato.Core.Models;
 using CautiousPotato.Database;
 using CautiousPotato.Server.Components;
 using CautiousPotato.Server.Middleware;
+using CautiousPotato.Server.Services;
 using CautiousPotato.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FluentUI.AspNetCore.Components;
@@ -18,6 +20,7 @@ builder.Services.AddFluentUIComponents();
 builder.Services.AddDatabase();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IIngredientService, IngredientService>();
+builder.Services.AddScoped<IRecipiesService, RecipiesService>();
 builder.Services.AddScoped<CspMiddleware>();
 
 var app = builder.Build();
@@ -47,7 +50,7 @@ app.MapRazorComponents<App>()
 
 
 var apiGroup = app.MapGroup("/api");
-var ingredientsGroup = apiGroup .MapGroup("/ingredients");
+var ingredientsGroup = apiGroup.MapGroup("/ingredients");
 
 ingredientsGroup.MapGet("/", ([FromServices] IIngredientService service) => service.GetAllAsync());
 ingredientsGroup.MapDelete("/{id:guid}", ([FromServices] IIngredientService service, [FromRoute] Guid id) => service.DeleteAsync(new(id)));
@@ -57,6 +60,22 @@ ingredientsGroup.MapGet("/{id:guid}", async ([FromServices] IIngredientService s
             ? Results.Ok(ingredient)
             : Results.NotFound());
 ingredientsGroup.MapPost("/", async ([FromServices] IIngredientService service, [FromBody] CreateIngredientRequest request) =>
+{
+    var created = await service.CreateAsync(request);
+
+    return Results.Created($"/{created.Id}", created);
+});
+
+var recipiesGroup = apiGroup.MapGroup("/recipies");
+
+recipiesGroup.MapGet("/", ([FromServices] IRecipiesService service) => service.GetAllAsync());
+recipiesGroup.MapDelete("/{id:guid}", ([FromServices] IRecipiesService service, [FromRoute] Guid id) => service.DeleteAsync(new(id)));
+recipiesGroup.MapGet("/{id:guid}", async ([FromServices] IRecipiesService service, [FromRoute] Guid id) =>
+    await service.GetAsync(new(id))
+        is Recipe recipe
+            ? Results.Ok(recipe)
+            : Results.NotFound());
+recipiesGroup.MapPost("/", async ([FromServices] IRecipiesService service, [FromBody] CreateRecipeRequest request) =>
 {
     var created = await service.CreateAsync(request);
 

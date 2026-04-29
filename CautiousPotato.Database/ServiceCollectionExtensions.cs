@@ -11,7 +11,10 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<CautiousPotatoDbContext>(options =>
             options.UseSqlServer("Server=localhost\\SQLEXPRESS;Initial Catalog=CautiousPotato;Trusted_Connection=True;TrustServerCertificate=True;Integrated Security=True"));
 
-        services.AddScoped<IIngredientRepository, IngredientRepository>();
+        services
+            .AddScoped<IIngredientRepository, IngredientRepository>()
+            .AddScoped<IRecipiesRepository, RecipiesRepository>();
+            
 
         return services;
     }
