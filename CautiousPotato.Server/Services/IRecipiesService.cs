@@ -9,4 +9,6 @@ public interface IRecipiesService
     Task DeleteAsync(DeleteRecipeRequest request);
     Task<ICollection<Recipe>> GetAllAsync();
     Task<Recipe?> GetAsync(GetRecipeRequest request);
+    Task<Recipe> AddIngredientAsync(AddIngredientToRecipeRequest request);
+    Task<Recipe> RemoveIngredientAsync(RemoveIngredientFromRecipeRequest request);
 }

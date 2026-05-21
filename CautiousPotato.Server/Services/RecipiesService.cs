@@ -20,4 +20,13 @@ public class RecipiesService(IRecipiesRepository repository, IIngredientReposito
     public Task DeleteAsync(DeleteRecipeRequest request) => repository.DeleteAsync(request.Id);
     public Task<ICollection<Recipe>> GetAllAsync() => repository.GetAllAsync();
     public Task<Recipe?> GetAsync(GetRecipeRequest request) => repository.GetAsync(request.Id);
+
+    public Task<Recipe> RemoveIngredientAsync(RemoveIngredientFromRecipeRequest request)
+    {
+        throw new NotImplementedException();
+    }
+    public Task<Recipe> AddIngredientAsync(AddIngredientToRecipeRequest request)
+    {
+        throw new NotImplementedException();
+    }
 }

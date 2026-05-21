@@ -41,8 +41,8 @@ public class RecepiesTests(TestFixture fixture)
     [Fact]
     public async Task Can_Get_All_Recipies()
     {
-        var created2 = await fixture.RecipesClient.CreateAsync(new(fixture.AutoFixture.Create<string>(), []));
         var created1 = await fixture.RecipesClient.CreateAsync(new(fixture.AutoFixture.Create<string>(), []));
+        var created2 = await fixture.RecipesClient.CreateAsync(new(fixture.AutoFixture.Create<string>(), []));
 
         var result = await fixture.RecipesClient.GetAllAsync();
 
@@ -51,6 +51,31 @@ public class RecepiesTests(TestFixture fixture)
 
         Assert.Contains(result, it => it.Id == created1.Id);
         Assert.Contains(result, it => it.Id == created2.Id);
+    }
+
+    [Fact]
+    public async Task Can_Add_Ingredient()
+    {
+        var recipe = await fixture.RecipesClient.CreateAsync(new(fixture.AutoFixture.Create<string>(), []));
+        var ingredient = await CreateIngredientAsync();
+        Assert.Empty(recipe.Ingredients);
+
+        var result = await fixture.RecipesClient.AddIngredientAsync(new(recipe.Id, ingredient.Id));
+
+        var addedIngredient = Assert.Single(result.Ingredients);
+        Assert.Equal(ingredient, addedIngredient);
+    }
+
+    [Fact]
+    public async Task Can_Remove_Ingredient()
+    {
+        var ingredient = await CreateIngredientAsync();
+        var recipe = await fixture.RecipesClient.CreateAsync(new(fixture.AutoFixture.Create<string>(), [ingredient.Id]));
+        Assert.Single(recipe.Ingredients);
+
+        var result = await fixture.RecipesClient.RemoveIngredientAsync(new(recipe.Id, ingredient.Id));
+
+        Assert.Empty(result.Ingredients);
     }
 
     private async Task<Ingredient> CreateIngredientAsync()

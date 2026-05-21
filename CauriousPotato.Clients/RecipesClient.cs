@@ -30,4 +30,14 @@ public class RecipesClient(HttpClient client) : IRecipesClient
     {
         return client.GetFromJsonAsync<Recipe?>(Path.AppendPathSegment(request.Id));
     }
+
+    public Task<Recipe> AddIngredientAsync(AddIngredientToRecipeRequest request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Recipe> RemoveIngredientAsync(RemoveIngredientFromRecipeRequest request)
+    {
+        throw new NotImplementedException();
+    }
 }
