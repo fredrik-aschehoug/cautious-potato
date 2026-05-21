@@ -18,6 +18,6 @@ public class RecipiesService(IRecipiesRepository repository, IIngredientReposito
     }
 
     public Task DeleteAsync(DeleteRecipeRequest request) => repository.DeleteAsync(request.Id);
-    public Task<Recipe[]> GetAllAsync() => repository.GetAllAsync();
+    public Task<ICollection<Recipe>> GetAllAsync() => repository.GetAllAsync();
     public Task<Recipe?> GetAsync(GetRecipeRequest request) => repository.GetAsync(request.Id);
 }

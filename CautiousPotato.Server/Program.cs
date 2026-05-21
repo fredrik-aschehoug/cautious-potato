@@ -5,7 +5,6 @@ using CautiousPotato.Database;
 using CautiousPotato.Server.Components;
 using CautiousPotato.Server.Middleware;
 using CautiousPotato.Server.Services;
-using CautiousPotato.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FluentUI.AspNetCore.Components;
 

@@ -17,19 +17,21 @@ internal class RecipiesRepository(CautiousPotatoDbContext dbContext) : IRecipies
     public async Task DeleteAsync(Guid id)
     {
         await dbContext.Recipes
+            .Include(r => r.Ingredients)
             .Where(recipe => recipe.ExternalId == id)
             .ExecuteDeleteAsync();
     }
 
-    public async Task<Recipe[]> GetAllAsync()
+    public async Task<ICollection<Recipe>> GetAllAsync()
     {
-        var entities = await dbContext.Recipes.ToArrayAsync();
+        var entities = await dbContext.Recipes.Include(r => r.Ingredients).ToArrayAsync();
         return entities.ToCoreModel();
     }
 
     public async Task<Recipe?> GetAsync(Guid id)
     {
         var entity = await dbContext.Recipes
+            .Include(r => r.Ingredients)
             .SingleOrDefaultAsync(recipe => recipe.ExternalId == id);
 
         return entity?.ToCoreModel();

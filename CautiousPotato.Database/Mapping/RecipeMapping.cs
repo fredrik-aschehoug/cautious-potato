@@ -7,7 +7,7 @@ internal static class REcipeMapping
     public static Core.Models.Recipe ToCoreModel(this Recipe recipe) =>
         new(recipe.ExternalId, recipe.Name, recipe.Ingredients.ToCoreModel());
 
-    public static Core.Models.Recipe[] ToCoreModel(this Recipe[] recipe) =>
+    public static ICollection<Core.Models.Recipe> ToCoreModel(this ICollection<Recipe> recipe) =>
         recipe
             .Select(ingredient => ingredient.ToCoreModel())
             .ToArray();

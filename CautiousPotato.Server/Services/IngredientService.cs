@@ -2,7 +2,7 @@
 using CautiousPotato.Core.Models;
 using CautiousPotato.Database.Repositories;
 
-namespace CautiousPotato.Services;
+namespace CautiousPotato.Server.Services;
 
 public class IngredientService(IIngredientRepository repository) : IIngredientService
 {
@@ -14,7 +14,7 @@ public class IngredientService(IIngredientRepository repository) : IIngredientSe
     }
 
     public Task DeleteAsync(DeleteIngredientRequest request) => repository.DeleteAsync(request.Id);
-    public Task<Ingredient[]> GetAllAsync() => repository.GetAllAsync();
+    public Task<ICollection<Ingredient>> GetAllAsync() => repository.GetAllAsync();
 
     public Task<Ingredient?> GetAsync(GetIngredientRequest request) => repository.GetAsync(request.Id);
 }

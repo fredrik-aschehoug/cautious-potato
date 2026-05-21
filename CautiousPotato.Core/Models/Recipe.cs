@@ -3,5 +3,5 @@
 public record Recipe(
     Guid Id,
     string Name,
-    Ingredient[] Ingredients
+    ICollection<Ingredient> Ingredients
 );

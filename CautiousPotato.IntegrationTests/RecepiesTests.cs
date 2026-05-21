@@ -2,6 +2,7 @@ using AutoFixture;
 using CauriousPotato.Requests.Ingredients;
 using CauriousPotato.Requests.Recipies;
 using CautiousPotato.Core.Models;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace CautiousPotato.IntegrationTests;
 
@@ -20,50 +21,36 @@ public class RecepiesTests(TestFixture fixture)
         Assert.Equal(request.Name, created.Name);
         Assert.Equal([ingredient], created.Ingredients);
 
-        var result = await fixture.IngredientsClient.GetAsync(new(created.Id));
+        var result = await fixture.RecipesClient.GetAsync(new(created.Id));
 
-        Assert.NotNull(result);
+        Assert.Equivalent(created, result);
     }
 
     [Fact]
     public async Task Can_Create_Recipe_With_No_Ingredients()
     {
-        var request = new CreateIngredientRequest(fixture.AutoFixture.Create<string>());
+        var request = new CreateRecipeRequest(fixture.AutoFixture.Create<string>(), []);
 
-        var created = await fixture.IngredientsClient.CreateAsync(request);
+        var created = await fixture.RecipesClient.CreateAsync(request);
 
         Assert.NotNull(created);
         Assert.Equal(request.Name, created.Name);
-
-        var result = await fixture.IngredientsClient.GetAllAsync();
-
-        Assert.NotNull(result);
+        Assert.Empty(created.Ingredients);
     }
 
     [Fact]
-    public async Task Can_Get_Ingredient()
+    public async Task Can_Get_All_Recipies()
     {
-        var created = await fixture.IngredientsClient.CreateAsync(new(fixture.AutoFixture.Create<string>()));
+        var created2 = await fixture.RecipesClient.CreateAsync(new(fixture.AutoFixture.Create<string>(), []));
+        var created1 = await fixture.RecipesClient.CreateAsync(new(fixture.AutoFixture.Create<string>(), []));
 
-        var result = await fixture.IngredientsClient.GetAsync(new(created.Id));
-
-        Assert.NotNull(result);
-        Assert.Equal(created, result);
-    }
-
-    [Fact]
-    public async Task Can_Get_All_Ingredients()
-    {
-        var created1 = await fixture.IngredientsClient.CreateAsync(new(fixture.AutoFixture.Create<string>()));
-        var created2 = await fixture.IngredientsClient.CreateAsync(new(fixture.AutoFixture.Create<string>()));
-
-        var result = await fixture.IngredientsClient.GetAllAsync();
+        var result = await fixture.RecipesClient.GetAllAsync();
 
         Assert.NotNull(result);
         Assert.NotEmpty(result);
 
-        Assert.Contains(created1, result);
-        Assert.Contains(created2, result);
+        Assert.Contains(result, it => it.Id == created1.Id);
+        Assert.Contains(result, it => it.Id == created2.Id);
     }
 
     private async Task<Ingredient> CreateIngredientAsync()

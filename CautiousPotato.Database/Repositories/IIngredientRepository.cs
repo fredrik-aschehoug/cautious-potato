@@ -5,7 +5,7 @@ namespace CautiousPotato.Database.Repositories;
 public interface IIngredientRepository
 {
     Task CreateAsync(Ingredient ingredient);
-    Task<Ingredient[]> GetAllAsync();
+    Task<ICollection<Ingredient>> GetAllAsync();
     Task<Ingredient?> GetAsync(Guid id);
     Task DeleteAsync(Guid id);
 }
