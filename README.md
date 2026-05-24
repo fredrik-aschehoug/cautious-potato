@@ -1,6 +1,14 @@
 # cautious-potato
 Meal-planning app. Name pending
 
+Todo: 
+- Client tree structure
+- Remove requests from Service layer
+- db connection string from env/secrets
+- API handlers
+- Vertical slice
+- Validation
+- CancellationTokens
 
 ## Features
 - [ ] Ingredients

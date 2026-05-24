@@ -31,13 +31,32 @@ public class RecipesClient(HttpClient client) : IRecipesClient
         return client.GetFromJsonAsync<Recipe?>(Path.AppendPathSegment(request.Id));
     }
 
-    public Task<Recipe> AddIngredientAsync(AddIngredientToRecipeRequest request)
+    public async Task<Recipe> AddIngredientAsync(AddIngredientToRecipeRequest request)
     {
-        throw new NotImplementedException();
+        var path = Path
+            .AppendPathSegment(request.RecipeId)
+            .AppendPathSegment("ingredients")
+            .AppendPathSegment(request.IngredientId);
+
+        var response = await client.PutAsync(path, null);
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<Recipe>() ?? throw new Exception("Unable to deserialize");
+
     }
 
-    public Task<Recipe> RemoveIngredientAsync(RemoveIngredientFromRecipeRequest request)
+    public async Task<Recipe> RemoveIngredientAsync(RemoveIngredientFromRecipeRequest request)
     {
-        throw new NotImplementedException();
+        var path = Path
+            .AppendPathSegment(request.RecipeId)
+            .AppendPathSegment("ingredients")
+            .AppendPathSegment(request.IngredientId);
+
+        var response = await client.DeleteAsync(path);
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<Recipe>() ?? throw new Exception("Unable to deserialize");
     }
 }

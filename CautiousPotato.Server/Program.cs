@@ -81,4 +81,16 @@ recipiesGroup.MapPost("/", async ([FromServices] IRecipiesService service, [From
     return Results.Created($"/{created.Id}", created);
 });
 
+var recipeIngredientsGroup = recipiesGroup.MapGroup("/{id:guid}/ingredients");
+
+recipeIngredientsGroup.MapPut("/{ingredientId:guid}", async (
+    [FromServices] IRecipiesService service,
+    [FromRoute] Guid id,
+    [FromRoute] Guid ingredientId) => await service.AddIngredientAsync(new(id, ingredientId)));
+
+recipeIngredientsGroup.MapDelete("/{ingredientId:guid}", async (
+    [FromServices] IRecipiesService service,
+    [FromRoute] Guid id,
+    [FromRoute] Guid ingredientId) => await service.RemoveIngredientAsync(new(id, ingredientId)));
+
 app.Run();

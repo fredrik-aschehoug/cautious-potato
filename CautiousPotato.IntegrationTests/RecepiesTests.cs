@@ -60,10 +60,16 @@ public class RecepiesTests(TestFixture fixture)
         var ingredient = await CreateIngredientAsync();
         Assert.Empty(recipe.Ingredients);
 
+        var allIngredients = await fixture.IngredientsClient.GetAllAsync();
+
         var result = await fixture.RecipesClient.AddIngredientAsync(new(recipe.Id, ingredient.Id));
 
         var addedIngredient = Assert.Single(result.Ingredients);
         Assert.Equal(ingredient, addedIngredient);
+
+        var allIngredientsAfterAdd = await fixture.IngredientsClient.GetAllAsync();
+
+        Assert.Equal(allIngredients.Length, allIngredientsAfterAdd.Length);
     }
 
     [Fact]

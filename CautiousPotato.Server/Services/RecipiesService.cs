@@ -21,12 +21,15 @@ public class RecipiesService(IRecipiesRepository repository, IIngredientReposito
     public Task<ICollection<Recipe>> GetAllAsync() => repository.GetAllAsync();
     public Task<Recipe?> GetAsync(GetRecipeRequest request) => repository.GetAsync(request.Id);
 
-    public Task<Recipe> RemoveIngredientAsync(RemoveIngredientFromRecipeRequest request)
+    public async Task<Recipe> RemoveIngredientAsync(RemoveIngredientFromRecipeRequest request)
     {
-        throw new NotImplementedException();
+        await repository.RemoveIngredientAsync(request.RecipeId, request.IngredientId);
+        return await repository.GetRequiredAsync(request.RecipeId);
     }
-    public Task<Recipe> AddIngredientAsync(AddIngredientToRecipeRequest request)
+
+    public async Task<Recipe> AddIngredientAsync(AddIngredientToRecipeRequest request)
     {
-        throw new NotImplementedException();
+        await repository.AddIngredientAsync(request.RecipeId, request.IngredientId);
+        return await repository.GetRequiredAsync(request.RecipeId);
     }
 }

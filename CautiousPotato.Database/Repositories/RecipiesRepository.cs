@@ -36,4 +36,38 @@ internal class RecipiesRepository(CautiousPotatoDbContext dbContext) : IRecipies
 
         return entity?.ToCoreModel();
     }
+
+    public async Task<Recipe> GetRequiredAsync(Guid id)
+    {
+        var entity = await dbContext.Recipes
+            .Include(r => r.Ingredients)
+            .SingleAsync(recipe => recipe.ExternalId == id);
+
+        return entity.ToCoreModel();
+    }
+
+    public async Task AddIngredientAsync(Guid id, Guid ingredientId)
+    {
+        var recipe = await dbContext.Recipes
+            .Include(r => r.Ingredients)
+            .SingleAsync(recipe => recipe.ExternalId == id);
+        
+        var ingredient = await dbContext.Ingredients
+            .SingleAsync(ingredient => ingredient.ExternalId == ingredientId);
+
+        recipe.Ingredients.Add(ingredient);
+
+        await dbContext.SaveChangesAsync();
+    }
+
+    public async Task RemoveIngredientAsync(Guid id, Guid ingredientId)
+    {
+        var recipe = await dbContext.Recipes
+            .Include(r => r.Ingredients)
+            .SingleAsync(recipe => recipe.ExternalId == id);
+
+        recipe.Ingredients = recipe.Ingredients.Where(ingredient => ingredient.ExternalId != ingredientId).ToList();
+
+        await dbContext.SaveChangesAsync();
+    }
 }
