@@ -4,18 +4,10 @@ using CautiousPotato.Database.Repositories;
 
 namespace CautiousPotato.Server.Services;
 
-public class RecipiesService(IRecipiesRepository repository, IIngredientRepository ingredientRepository) : IRecipiesService
+public class RecipiesService(IRecipiesRepository repository) : IRecipiesService
 {
-    public async Task<Recipe> CreateAsync(CreateRecipeRequest request)
-    {
-        var allIngredients = await ingredientRepository.GetAllAsync();
-        var ingredients = allIngredients.IntersectBy(request.Ingredients, i => i.Id).ToArray();
-        var recipe = new Recipe(Guid.NewGuid(), request.Name, ingredients);
-        
-        await repository.CreateAsync(recipe);
-
-        return recipe;
-    }
+    public Task<Recipe> CreateAsync(CreateRecipeRequest request) =>
+        repository.CreateAsync(request.Name, request.Ingredients);
 
     public Task DeleteAsync(DeleteRecipeRequest request) => repository.DeleteAsync(request.Id);
     public Task<ICollection<Recipe>> GetAllAsync() => repository.GetAllAsync();

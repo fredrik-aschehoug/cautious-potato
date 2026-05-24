@@ -6,12 +6,23 @@ namespace CautiousPotato.Database.Repositories;
 
 internal class RecipiesRepository(CautiousPotatoDbContext dbContext) : IRecipiesRepository
 {
-    public async Task CreateAsync(Recipe recipe)
+    public async Task<Recipe> CreateAsync(string name, Guid[] ingredientIds)
     {
-        var entity = recipe.ToEntity();
+        var ingredients = await dbContext.Ingredients
+            .Where(ingredient => ingredientIds.Contains(ingredient.ExternalId))
+            .ToListAsync();
+
+        var entity = new Entities.Recipe
+        {
+            ExternalId = Guid.NewGuid(),
+            Name = name,
+            Ingredients = ingredients
+        };
 
         dbContext.Recipes.Add(entity);
         await dbContext.SaveChangesAsync();
+
+        return entity.ToCoreModel();
     }
 
     public async Task DeleteAsync(Guid id)

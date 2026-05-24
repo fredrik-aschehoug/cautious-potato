@@ -2,7 +2,6 @@ using AutoFixture;
 using CauriousPotato.Requests.Ingredients;
 using CauriousPotato.Requests.Recipies;
 using CautiousPotato.Core.Models;
-using Microsoft.AspNetCore.Http.Features;
 
 namespace CautiousPotato.IntegrationTests;
 
@@ -15,6 +14,9 @@ public class RecepiesTests(TestFixture fixture)
         var ingredient = await CreateIngredientAsync();
         var request = new CreateRecipeRequest(fixture.AutoFixture.Create<string>(), [ingredient.Id]);
 
+        var allIngredients = await fixture.IngredientsClient.GetAllAsync();
+
+
         var created = await fixture.RecipesClient.CreateAsync(request);
 
         Assert.NotNull(created);
@@ -24,6 +26,10 @@ public class RecepiesTests(TestFixture fixture)
         var result = await fixture.RecipesClient.GetAsync(new(created.Id));
 
         Assert.Equivalent(created, result);
+
+        var allIngredientsAfterCreate = await fixture.IngredientsClient.GetAllAsync();
+        Assert.Equal(allIngredients.Length, allIngredientsAfterCreate.Length);
+
     }
 
     [Fact]

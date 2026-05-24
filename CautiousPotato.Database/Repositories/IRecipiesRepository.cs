@@ -4,7 +4,7 @@ namespace CautiousPotato.Database.Repositories;
 
 public interface IRecipiesRepository
 {
-    Task CreateAsync(Recipe recipe);
+    Task<Recipe> CreateAsync(string name, Guid[] ingredientIds);
     Task<ICollection<Recipe>> GetAllAsync();
     Task<Recipe?> GetAsync(Guid id);
     Task<Recipe> GetRequiredAsync(Guid id);
