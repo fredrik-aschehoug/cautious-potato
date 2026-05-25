@@ -1,0 +1,23 @@
+﻿<FluentCard>
+    @if (_recipies == null)
+    {
+        <FluentProgressRing />
+    }
+    else
+    {
+        <ul>
+            @foreach (var recipe in _recipies)
+            {
+                <li>
+                    <FluentStack>
+                        <span>@recipe.Name</span>
+                        <FluentButton Appearance="Appearance.Neutral" OnClick="@(async () => await HandleDeleteAsync(recipe))">Delete</FluentButton>
+                    </FluentStack>
+                </li>
+            }
+        </ul>
+    }
+</FluentCard>
+
+
+

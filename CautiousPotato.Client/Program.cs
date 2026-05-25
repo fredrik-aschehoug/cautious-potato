@@ -11,9 +11,15 @@ builder.Services.AddHttpClient<IIngredientsClient, IngredientsClient>(client =>
 {
     client.BaseAddress = new(builder.HostEnvironment.BaseAddress, UriKind.Absolute);
 });
+builder.Services.AddHttpClient<IRecipesClient, RecipesClient>(client =>
+{
+    client.BaseAddress = new(builder.HostEnvironment.BaseAddress, UriKind.Absolute);
+});
 
 builder.Services.AddFluentUIComponents();
 
-builder.Services.AddScoped<IIngredientsService, IngredientsService>();
+builder.Services
+    .AddScoped<IIngredientsService, IngredientsService>()
+    .AddScoped<IRecipiesService, RecipiesService>();
 
 await builder.Build().RunAsync();
